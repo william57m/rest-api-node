@@ -1,7 +1,23 @@
-rest-api-node
-=============
+# rest-api-node
 
-Test structure for a REST API with NodeJS using Restify and Sequelize
+Test structure for a NodeJS REST API using Restify, Sequelize and Postgresql
 
-# Requirements
-mysql have to run on your localhost as in the config file (config/sequelize.js), the application is expecting to be able to connect to a schema named "students" with the 'root' user and password 'root'
+## Setup
+
+```bash
+# Build images
+docker-compose build
+
+# Init DB
+docker run --rm \
+           --link server-db \
+           rest-api-node_server \
+           npm run initdb
+```
+
+
+## Run
+
+```bash
+docker-compose up -d
+```

@@ -1,0 +1,33 @@
+---
+version: '2'
+
+services:
+    server:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        container_name: server
+        network_mode: bridge
+        environment:
+            - NODE_ENV=dev
+        links:
+            - server-db:server-db
+        volumes:
+            - ./package.json:/home/userapi/package.json
+            - ./server:/home/userapi/server
+        ports:
+            - "9000:8080"
+
+    server-db:
+        image: postgres:11.1
+        container_name: server-db
+        network_mode: bridge
+        volumes:
+            - server-db-data:/var/lib/postgresql/data:cached
+        environment:
+            - POSTGRES_USER=server
+            - POSTGRES_PASSWORD=server
+            - POSTGRES_DB=db
+
+volumes:
+    server-db-data:
